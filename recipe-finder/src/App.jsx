@@ -1,9 +1,10 @@
 import React from "react";
+import Ingredients from "./components/ingredients";
 
 const App = () => {
 	return (
 		<div className="main-container">
-			<h2>Hello World!</h2>
+			<Ingredients />
 		</div>
 	);
 };
