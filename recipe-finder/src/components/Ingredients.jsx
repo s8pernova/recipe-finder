@@ -1,7 +1,7 @@
 import React from "react";
 import ingredientsList from "../../ingredients.json";
 
-const Ingredients = (props) => {
+const ingredients = (props) => {
 	return (
 		<div
 			className={`ingredient-container ${props.border} ${props.borderColor}`}
@@ -24,4 +24,4 @@ const Ingredients = (props) => {
 	);
 };
 
-export default Ingredients;
+export default ingredients;
