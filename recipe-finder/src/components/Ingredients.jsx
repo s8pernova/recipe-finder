@@ -1,27 +1,77 @@
-import React from "react";
+import React, { useState } from "react";
 import ingredientsList from "../../ingredients.json";
 
-const ingredients = (props) => {
+const Ingredients = ({ fetchRecipes }) => {
+	const [selectedIngredients, setSelectedIngredients] = useState([]);
+	const [banList, setBanList] = useState([]); // Add state for ban list
+
+	const handleCheckboxChange = (event) => {
+		const { name, checked } = event.target;
+		setSelectedIngredients((prev) =>
+			checked
+				? [...prev, name]
+				: prev.filter((ingredient) => ingredient !== name)
+		);
+	};
+
+	const handleBanListChange = (event) => {
+		// Add handler for ban list
+		const { name, checked } = event.target;
+		setBanList((prev) =>
+			checked
+				? [...prev, name]
+				: prev.filter((ingredient) => ingredient !== name)
+		);
+	};
+
+	const handleSubmit = async (event) => {
+		event.preventDefault(); // Prevents page reload
+		if (selectedIngredients.length === 0) {
+			alert("Please select at least one ingredient!");
+			return;
+		}
+		await fetchRecipes(selectedIngredients, banList);
+	};
+
 	return (
-		<div
-			className={`ingredient-container ${props.border} ${props.borderColor}`}
-		>
-			<h2>Ingredient Checklist</h2>
-			<form className="ingredient-form">
-				{ingredientsList.map((ingredient, index) => (
-					<div key={index}>
-						<input
-							type="checkbox"
-							id={`ingredient-${index}`}
-							name={ingredient}
-						/>
-						<label htmlFor={`ingredient-${index}`}>{ingredient}</label>
-					</div>
-				))}
+		<div>
+			<form className="ingredient-container" onSubmit={handleSubmit}>
+				<h2>Ingredient Checklist</h2>
+				<div className="ingredient-form">
+					{ingredientsList.map((ingredient, index) => (
+						<div key={index}>
+							<input
+								type="checkbox"
+								id={`ingredient-${index}`}
+								name={ingredient}
+								onChange={handleCheckboxChange}
+							/>
+							<label htmlFor={`ingredient-${index}`}>{ingredient}</label>
+						</div>
+					))}
+				</div>
+
+				<h2>Ban List :(</h2>
+				<div className="ingredient-form">
+					{ingredientsList.map((ingredient, index) => (
+						<div key={index}>
+							<input
+								type="checkbox"
+								id={`ban-${index}`}
+								name={ingredient}
+								onChange={handleBanListChange}
+							/>
+							<label htmlFor={`ban-${index}`}>{ingredient}</label>
+						</div>
+					))}
+				</div>
+
+				<button type="submit" className="submit-button">
+					Look up recipes!
+				</button>
 			</form>
-			<button className="submit-button">Submit</button>
 		</div>
 	);
 };
 
-export default ingredients;
+export default Ingredients;
