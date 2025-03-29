@@ -18,7 +18,3 @@
 - [x] Multiple types of attributes can be added to the ban list
 - [ ] Users can see a stored history of their previously viewed items from this session
 
-<br>
-<img src='./src/assets/walkthrough-video.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-
-GIF created with [Ezgif](https://ezgif.com/)
