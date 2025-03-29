@@ -19,6 +19,6 @@
 - [ ] Users can see a stored history of their previously viewed items from this session
 
 <br>
-<img src='.recipe-finder/src/assets/walkthrough-video.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='./recipe-finder/src/assets/walkthrough-video.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [Ezgif](https://ezgif.com/)
