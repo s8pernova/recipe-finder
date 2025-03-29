@@ -3,11 +3,21 @@ import ingredientsList from "../../ingredients.json";
 
 const Ingredients = ({ fetchRecipes }) => {
 	const [selectedIngredients, setSelectedIngredients] = useState([]);
-	const [banList, setBanList] = useState([]);
+	const [banList, setBanList] = useState([]); // Add state for ban list
 
 	const handleCheckboxChange = (event) => {
 		const { name, checked } = event.target;
 		setSelectedIngredients((prev) =>
+			checked
+				? [...prev, name]
+				: prev.filter((ingredient) => ingredient !== name)
+		);
+	};
+
+	const handleBanListChange = (event) => {
+		// Add handler for ban list
+		const { name, checked } = event.target;
+		setBanList((prev) =>
 			checked
 				? [...prev, name]
 				: prev.filter((ingredient) => ingredient !== name)
@@ -20,20 +30,19 @@ const Ingredients = ({ fetchRecipes }) => {
 			alert("Please select at least one ingredient!");
 			return;
 		}
-		await fetchRecipes(selectedIngredients);
+		await fetchRecipes(selectedIngredients, banList);
 	};
 
 	return (
 		<div>
 			<form className="ingredient-container" onSubmit={handleSubmit}>
 				<h2>Ingredient Checklist</h2>
-
 				<div className="ingredient-form">
-					{ingredientsList.map((ingredient) => (
+					{ingredientsList.map((ingredient, index) => (
 						<div key={index}>
 							<input
-								className="styled-checkbox"
 								type="checkbox"
+								id={`ingredient-${index}`}
 								name={ingredient}
 								onChange={handleCheckboxChange}
 							/>
@@ -41,8 +50,9 @@ const Ingredients = ({ fetchRecipes }) => {
 						</div>
 					))}
 				</div>
-				<h2>Ban List</h2>
-				<div className="ban-list-form">
+
+				<h2>Ban List :(</h2>
+				<div className="ingredient-form">
 					{ingredientsList.map((ingredient, index) => (
 						<div key={index}>
 							<input
@@ -57,7 +67,7 @@ const Ingredients = ({ fetchRecipes }) => {
 				</div>
 
 				<button type="submit" className="submit-button">
-					Submit!
+					Look up recipes!
 				</button>
 			</form>
 		</div>
