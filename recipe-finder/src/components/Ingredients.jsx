@@ -3,7 +3,7 @@ import ingredientsList from "../../ingredients.json";
 
 const Ingredients = ({ fetchRecipes }) => {
 	const [selectedIngredients, setSelectedIngredients] = useState([]);
-	const [banList, setBanList] = useState([]); // Add state for ban list
+	const [banList, setBanList] = useState([]);
 
 	const handleCheckboxChange = (event) => {
 		const { name, checked } = event.target;
@@ -30,7 +30,12 @@ const Ingredients = ({ fetchRecipes }) => {
 			alert("Please select at least one ingredient!");
 			return;
 		}
-		await fetchRecipes(selectedIngredients, banList);
+
+		try {
+			await fetchRecipes(selectedIngredients, banList);
+		} catch (error) {
+			console.error("Error fetching recipes:", error);
+		}
 	};
 
 	return (
@@ -66,7 +71,7 @@ const Ingredients = ({ fetchRecipes }) => {
 					))}
 				</div>
 
-				<button type="submit" className="submit-button">
+				<button type="submit" className="submit-button" onClick={handleSubmit}>
 					Look up recipes!
 				</button>
 			</form>
